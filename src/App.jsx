@@ -7,7 +7,7 @@ const App = () => {
         <div className="min-h-screen bg-gray-50 py-8">
             <div className="container mx-auto">
                 <header className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">SMART Goals Setter</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">SMART Goals Set Better</h1>
                     <p className="mt-2 text-gray-600">Create and track your SMART goals effectively</p>
                 </header>
             </div>
