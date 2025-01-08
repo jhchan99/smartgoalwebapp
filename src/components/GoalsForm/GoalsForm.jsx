@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-// import History from "../History/History";
+import History from "../History/History";
 import { DownloadIcon, ShareIcon } from '@heroicons/react/outline';
 
 const GoalsForm = () => {
@@ -11,6 +11,9 @@ const GoalsForm = () => {
         relevant: '',
         timebound: '',
     });
+
+    const [history, setHistory] = useState([]);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -68,10 +71,8 @@ const GoalsForm = () => {
     const handleSave = () => {
         const newGoal = {...goalData, dateSaved: new Date().toLocaleString()};
 
-        // Save to localStorage
-        const savedGoals = JSON.parse(localStorage.getItem('smartGoals')) || [];
-        const updatedGoals = [newGoal, ...savedGoals];
-        localStorage.setItem('smartGoals', JSON.stringify(updatedGoals));
+        // Add the new goal to the history state
+        setHistory((prevHistory) => [newGoal, ...prevHistory]);
 
         // Clear the form
         setGoalData({
@@ -188,6 +189,8 @@ const GoalsForm = () => {
                     </button>
                 </div>
             </div>
+            {/* Pass History to the History Component */}
+            <History history={history} />
         </div>
     );
 };
