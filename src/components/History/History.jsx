@@ -1,14 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
-const History = () => {
-    const [history, setHistory] = useState([]);
-
-    // Load history from localStorage when the component mounts
-    useEffect(() => {
-        const savedGoals = JSON.parse(localStorage.getItem('smartGoals')) || [];
-        setHistory(savedGoals);
-    }, []);
-
+const History = ({ history }) => {
     return (
         <div className="mt-8 max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
             <h3 className="text-xl font-bold text-gray-800 mb-4">Goal History</h3>
