@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+// import History from "../History/History";
+import { DownloadIcon, ShareIcon } from '@heroicons/react/outline';
 
 const GoalsForm = () => {
 
@@ -20,15 +22,14 @@ const GoalsForm = () => {
 
     const handleShareToNotes = async () => {
         const goalText = `
-SMART Goal
------------
-Specific: ${goalData.specific}
-Measurable: ${goalData.measurable}
-Achievable: ${goalData.achievable}
-Relevant: ${goalData.relevant}
-Time-bound: ${goalData.timebound}
-    `;
-
+            SMART Goal
+            -----------
+            Specific: ${goalData.specific}
+            Measurable: ${goalData.measurable}
+            Achievable: ${goalData.achievable}
+            Relevant: ${goalData.relevant}
+            Time-bound: ${goalData.timebound}
+        `;
         if (navigator.share) {
             try {
                 await navigator.share({
@@ -46,14 +47,14 @@ Time-bound: ${goalData.timebound}
 
     const handleDownload = () => {
         const goalText = `
-SMART Goal
------------
-Specific: ${goalData.specific}
-Measurable: ${goalData.measurable}
-Achievable: ${goalData.achievable}
-Relevant: ${goalData.relevant}
-Time-bound: ${goalData.timebound}
-    `;
+            SMART Goal
+            -----------
+            Specific: ${goalData.specific}
+            Measurable: ${goalData.measurable}
+            Achievable: ${goalData.achievable}
+            Relevant: ${goalData.relevant}
+            Time-bound: ${goalData.timebound}
+        `;
         const blob = new Blob([goalText], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -62,6 +63,25 @@ Time-bound: ${goalData.timebound}
         link.click();
         URL.revokeObjectURL(url);
     };
+
+
+    const handleSave = () => {
+        const newGoal = {...goalData, dateSaved: new Date().toLocaleString()};
+
+        // Save to localStorage
+        const savedGoals = JSON.parse(localStorage.getItem('smartGoals')) || [];
+        const updatedGoals = [newGoal, ...savedGoals];
+        localStorage.setItem('smartGoals', JSON.stringify(updatedGoals));
+
+        // Clear the form
+        setGoalData({
+            specific: '',
+            measurable: '',
+            achievable: '',
+            relevant: '',
+            timebound: '',
+        });
+    }
 
     return (
         <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -135,26 +155,38 @@ Time-bound: ${goalData.timebound}
                 />
             </div>
 
-            {/* Save to Notes */}
-            <div className="mb-4">
-                <button
-                    type="button"
-                    onClick={handleShareToNotes}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg"
-                >
-                    Save to Notes
-                </button>
-            </div>
-
-            {/* Download */}
+            {/* Save Button */}
             <div>
                 <button
                     type="button"
-                    onClick={handleDownload}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+                    onClick={handleSave}
+                    className="w-full bg-green-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
                 >
-                    Download
+                    Save Goal
                 </button>
+            </div>
+            <div className="flex justify-end space-x-2 mt-4">
+                {/* Download */}
+                <div>
+                    <button
+                        type="button"
+                        onClick={handleDownload}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded-lg"
+                    >
+                        <DownloadIcon className="h-5 w-5" />
+                    </button>
+                </div>
+
+                {/* Save to Notes */}
+                <div className="mb-4">
+                    <button
+                        type="button"
+                        onClick={handleShareToNotes}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded-lg"
+                    >
+                        <ShareIcon className="h-5 w-5" />
+                    </button>
+                </div>
             </div>
         </div>
     );
