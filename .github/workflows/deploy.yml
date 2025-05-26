@@ -1,0 +1,58 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main        # Deploy to production
+      - staging     # Deploy to staging
+  pull_request:
+    branches:
+      - main        # Test builds on PRs
+
+env:
+  PROJECT_ID: smartgoalapp-3a223
+  REGION: us-west3
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+    
+    - name: Set up Cloud SDK
+      uses: 'google-github-actions/setup-gcloud@v2'
+    
+    - name: Configure Docker to use gcloud as credential helper
+      run: gcloud auth configure-docker
+    
+    - name: Deploy to staging
+      if: github.ref == 'refs/heads/staging'
+      run: |
+        gcloud run deploy smart-goal-app-staging \
+          --source . \
+          --region ${{ env.REGION }} \
+          --allow-unauthenticated \
+          --project ${{ env.PROJECT_ID }}
+    
+    - name: Deploy to production
+      if: github.ref == 'refs/heads/main'
+      run: |
+        gcloud run deploy smart-goal-app-service \
+          --source . \
+          --region ${{ env.REGION }} \
+          --allow-unauthenticated \
+          --project ${{ env.PROJECT_ID }}
+    
+    - name: Test build only (for PRs)
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "Testing build for PR..."
+        docker build -t test-build .

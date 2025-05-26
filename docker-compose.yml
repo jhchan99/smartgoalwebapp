@@ -1,8 +1,10 @@
-version: '3.8'
 services:
   web:
     build: .
     ports:
-      - "3000:80"
+      - "3000:8080"  # This looks correct
     container_name: smartgoalwebapp
-    restart: unless-stopped 
+    restart: unless-stopped
+    environment:
+      - PORT=8080  # Explicitly set the PORT environment variable
+      

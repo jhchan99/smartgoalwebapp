@@ -2,6 +2,14 @@ import React, {useState} from 'react';
 import History from "../History/History";
 import { DownloadIcon, ShareIcon } from '@heroicons/react/outline';
 
+// TODO: Add a button to clear the history
+// TODO: Add a button to delete a goal
+// TODO: Add a button to edit a goal
+// TODO: Add a button to share a goal
+// TODO: Add a button to download a goal
+// TODO: Add a button to save a goal
+// TODO: Add a button to load a goal
+
 const GoalsForm = () => {
 
     const [goalData, setGoalData] = useState({
