@@ -1,0 +1,73 @@
+.goalsform-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.goalsform-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #22223b;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.goalsform-field {
+  margin-bottom: 20px;
+}
+
+.goalsform-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.goalsform-input,
+.goalsform-textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  background: #f9fafb;
+  transition: border 0.2s;
+}
+
+.goalsform-input:focus,
+.goalsform-textarea:focus {
+  border-color: #2563eb;
+  outline: none;
+  background: #fff;
+}
+
+.goalsform-textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.goalsform-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.goalsform-save-btn {
+  background: #22c55e;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.goalsform-save-btn:hover {
+  background: #16a34a;
+}

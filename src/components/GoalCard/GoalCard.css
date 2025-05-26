@@ -1,0 +1,51 @@
+.goalcard-container {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.goalcard-details h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #22223b;
+  margin-bottom: 4px;
+}
+
+.goalcard-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.goalcard-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.goalcard-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.goalcard-actions button:hover {
+  background: #e0e7ff;
+}
+
+.goalcard-icon {
+  width: 22px;
+  height: 22px;
+  color: #2563eb;
+  vertical-align: middle;
+}
