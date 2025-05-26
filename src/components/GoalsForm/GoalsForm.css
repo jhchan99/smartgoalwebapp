@@ -34,6 +34,7 @@
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 1rem;
+  font-family: inherit;
   background: #f9fafb;
   transition: border 0.2s;
 }
@@ -52,7 +53,8 @@
 
 .goalsform-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
   margin-top: 24px;
 }
@@ -70,4 +72,31 @@
 
 .goalsform-save-btn:hover {
   background: #16a34a;
+}
+
+.goalsform-secondary-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.goalsform-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goalsform-action-btn:hover {
+  background: #e0e7ff;
+}
+
+.goalsform-icon {
+  width: 20px;
+  height: 20px;
+  color: #2563eb;
 }

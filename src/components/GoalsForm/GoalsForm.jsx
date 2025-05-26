@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { ShareIcon, DownloadIcon, TrashIcon } from '@heroicons/react/outline';
 import './GoalsForm.css';
 
 const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
@@ -33,6 +34,14 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
     };
 
     const handleSave = () => {
+        // Validate that at least some fields have content
+        const hasValidContent = Object.values(goalData).some(value => value.trim() !== '');
+        
+        if (!hasValidContent) {
+            alert('Please fill in at least one field before saving your goal.');
+            return;
+        }
+
         if (isEditing && editingIndex !== null) {
             // Update existing goal
             const updatedHistory = [...history];
@@ -54,6 +63,69 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
             timebound: '',
         });
     };
+
+    const handleClear = () => {
+        setGoalData({
+            title: '',
+            specific: '',
+            measurable: '',
+            achievable: '',
+            relevant: '',
+            timebound: '',
+        });
+        setIsEditing(false);
+        setEditingIndex(null);
+        setEditingGoal(null);
+    };
+
+    const handleShareToNotes = async () => {
+        const goalText = `
+            SMART Goal
+            -----------
+            Title: ${goalData.title}
+            Specific: ${goalData.specific}
+            Measurable: ${goalData.measurable}
+            Achievable: ${goalData.achievable}
+            Relevant: ${goalData.relevant}
+            Time-bound: ${goalData.timebound}
+        `;
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'My Success Goal',
+                    text: goalText,
+                });
+                console.log('Shared successfully!');
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            alert('Web Share API is not supported in your browser.');
+        }
+    };
+
+    const handleDownload = () => {
+        const goalText = `
+            Success Goal
+            -----------
+            Title: ${goalData.title}
+            Specific: ${goalData.specific}
+            Measurable: ${goalData.measurable}
+            Achievable: ${goalData.achievable}
+            Relevant: ${goalData.relevant}
+            Time-bound: ${goalData.timebound}
+        `;
+        const blob = new Blob([goalText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Success_Goal.txt';
+        link.click();
+        URL.revokeObjectURL(url);
+    };
+
+    // Check if form has content for conditional button display
+    const hasContent = Object.values(goalData).some(value => value.trim() !== '');
 
     return (
         <div className="goalsform-container">
@@ -133,9 +205,24 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
                 <button
                     onClick={handleSave}
                     className="goalsform-save-btn"
+                    disabled={!hasContent}
                 >
                     {isEditing ? "Update Goal" : "Save Goal"}
                 </button>
+                
+                {hasContent && (
+                    <div className="goalsform-secondary-actions">
+                        <button onClick={handleClear} title="Clear Form" className="goalsform-action-btn">
+                            <TrashIcon className="goalsform-icon" />
+                        </button>
+                        <button onClick={handleShareToNotes} title="Share" className="goalsform-action-btn">
+                            <ShareIcon className="goalsform-icon" />
+                        </button>
+                        <button onClick={handleDownload} title="Download" className="goalsform-action-btn">
+                            <DownloadIcon className="goalsform-icon" />
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
