@@ -1,22 +1,24 @@
-const History = ({ history }) => {
+import React from 'react';
+import GoalCard from '../GoalCard/GoalCard';
+import './History.css';
+
+const History = ({ history, onEdit, onDelete }) => {
     return (
-        <div className="mt-8 max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Goal History</h3>
+        <div className="history-container">
+            <h3 className="history-title">Goal History</h3>
             {history.length === 0 ? (
-                <p className="text-gray-600">No goals saved yet.</p>
+                <p className="history-empty">No goals saved yet.</p>
             ) : (
-                <ul className="space-y-4">
+                <div className="history-list">
                     {history.map((goal, index) => (
-                        <li key={index} className="p-4 border border-gray-300 rounded-lg shadow-sm">
-                            <p><strong>Specific:</strong> {goal.specific}</p>
-                            <p><strong>Measurable:</strong> {goal.measurable}</p>
-                            <p><strong>Achievable:</strong> {goal.achievable}</p>
-                            <p><strong>Relevant:</strong> {goal.relevant}</p>
-                            <p><strong>Time-bound:</strong> {goal.timebound}</p>
-                            <p className="text-sm text-gray-500">Saved on: {goal.dateSaved}</p>
-                        </li>
+                        <GoalCard
+                            key={index}
+                            goal={goal}
+                            onEdit={() => onEdit({ goal, index })}
+                            onDelete={() => onDelete(index)}
+                        />
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );

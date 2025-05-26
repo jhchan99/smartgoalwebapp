@@ -1,18 +1,39 @@
-// src/App.jsx
-import React from 'react';
+import React from "react";
 import GoalsForm from "./components/GoalsForm/GoalsForm";
+import History from "./components/History/History";
+import Header from "./components/Header/Header";
+import { useGoals } from './hooks/useGoals';
+import './styles/globals.css';
+import Sidebar from "./components/Sidebar/Sidebar";
+
+// TODO: Add a button to clear the history
+// TODO: fix mobile views
+// TODO: implement branding and logo
+// TODO: implement long term storage
+// TODO: implement user accounts for saving goals
 
 const App = () => {
+    const { history, setHistory, editingGoal, setEditingGoal, handleDelete } = useGoals();
+
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="container mx-auto">
-                <header className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">SMART Goals Set Better</h1>
-                    <p className="mt-2 text-gray-600">Create and track your SMART goals effectively</p>
-                </header>
-            </div>
-            <div className="App">
-                <GoalsForm/>
+        <div>
+            <Header />
+            <div className="app-layout">
+                <Sidebar>
+                    <History 
+                        history={history}
+                        onEdit={setEditingGoal}
+                        onDelete={handleDelete}
+                    />
+                </Sidebar>
+                <main className="main-content">
+                    <GoalsForm 
+                        history={history} 
+                        setHistory={setHistory}
+                        editingGoal={editingGoal}
+                        setEditingGoal={setEditingGoal}
+                    />
+                </main>
             </div>
         </div>
     );

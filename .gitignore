@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Google Cloud credentials and other sensitive files
+github-actions-key.json
+*.json.key
+service-account-*.json
