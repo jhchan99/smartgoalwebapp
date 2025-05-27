@@ -11,18 +11,23 @@ import Sidebar from "./components/Sidebar/Sidebar";
 // TODO: implement branding and logo
 // TODO: implement long term storage
 // TODO: implement user accounts for saving goals
+// TODO: when user saves goal, if the sidebar is closed, create an animation that shaws the goal being saved to history
+//      - this could be a simple notification bubble that appears on the toggle button
+//      - the bubble could be a simple text bubble that says "Goal saved"
+//      - the bubble could be a simple icon bubble that says "Goal saved"
+//      - or if the user has unseen goals, 
 
 const App = () => {
-    const { history, setHistory, editingGoal, setEditingGoal, handleDelete } = useGoals();
+    const { history, setHistory, editingGoal, setEditingGoal, handleDelete, unviewedCount, markGoalsAsViewed } = useGoals();
 
     return (
         <div>
             <Header />
             <div className="app-layout">
-                <Sidebar>
+                <Sidebar unviewedCount={unviewedCount} onOpen={markGoalsAsViewed}>
                     <History 
                         history={history}
-                        onEdit={setEditingGoal}
+                        onEdit={setEditingGoal} 
                         onDelete={handleDelete}
                     />
                 </Sidebar>

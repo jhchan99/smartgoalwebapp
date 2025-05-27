@@ -2,6 +2,11 @@
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   border-bottom: 1px solid #e2e8f0;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .app-header::after {
@@ -21,18 +26,34 @@
   font-weight: 600;
   text-align: center;
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0;
   letter-spacing: -0.025em;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0A6BBE 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
 }
 
+.app-logo {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
   .app-subtitle {
     font-size: 1.5rem;
     padding: 0.75rem 1rem;
+  }
+  
+  .app-logo {
+    width: 60px;
+    height: 60px;
   }
 }

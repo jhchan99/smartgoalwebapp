@@ -53,3 +53,8 @@
 .sidebar.collapsed .sidebar-tooltip-wrapper {
   right: -45px;
 }
+
+.sidebar-toggle-wrapper {
+  position: relative;
+  display: inline-block;
+}

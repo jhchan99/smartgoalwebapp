@@ -29,7 +29,16 @@ export function useGoals() {
     setHistory(history => history.filter((_, i) => i !== index));
   };
 
-  // ...other handlers
+  // Add unviewed goals tracking
+  const unviewedCount = history.filter(goal => !goal.isViewed).length;
+
+  const markGoalsAsViewed = () => {
+    setHistory(currentHistory => 
+      currentHistory.map(goal => 
+        goal.isViewed ? goal : { ...goal, isViewed: true, dateViewed: new Date().toISOString() }
+      )
+    );
+  };
 
   return {
     history,
@@ -37,6 +46,8 @@ export function useGoals() {
     editingGoal,
     setEditingGoal,
     handleDelete,
+    unviewedCount,
+    markGoalsAsViewed,
     // ...other handlers
   };
 }

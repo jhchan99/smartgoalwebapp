@@ -45,14 +45,23 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
         if (isEditing && editingIndex !== null) {
             // Update existing goal
             const updatedHistory = [...history];
-            updatedHistory[editingIndex] = { ...goalData, dateSaved: new Date().toLocaleString() };
+            updatedHistory[editingIndex] = { 
+                ...goalData, 
+                dateSaved: new Date().toLocaleString(),
+                isViewed: history[editingIndex]?.isViewed || false
+            };
             setHistory(updatedHistory);
             setIsEditing(false);
             setEditingIndex(null);
             setEditingGoal(null);
         } else {
-            // Add new goal
-            setHistory([{ ...goalData, dateSaved: new Date().toLocaleString() }, ...history]);
+            // Add new goal - mark as unviewed
+            setHistory([{ 
+                ...goalData, 
+                dateSaved: new Date().toLocaleString(),
+                isViewed: false,
+                dateViewed: null
+            }, ...history]);
         }
         setGoalData({
             title: '',
