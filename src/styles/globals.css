@@ -13,9 +13,6 @@ body {
 }
 
 /* Layout for App */
-.app-header {
-  @apply py-6 px-4 bg-white shadow;
-}
 
 .app-title {
   @apply text-3xl font-bold text-gray-900;
@@ -41,12 +38,6 @@ body {
   @apply flex-1 p-6;
 }
 
-.sidebar {
-  width: 320px;
-  background: #fff;
-  border-right: 1px solid #e0e0e0;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.03);
-}
 
 :root {
     --background: 0 0% 100%;

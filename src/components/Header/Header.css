@@ -1,6 +1,4 @@
 .app-header {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-bottom: 1px solid #e2e8f0;
   position: relative;
   display: flex;
   align-items: center;

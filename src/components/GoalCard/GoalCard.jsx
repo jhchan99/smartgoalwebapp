@@ -1,6 +1,8 @@
 import React from 'react';
 import { ShareIcon, DownloadIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import './GoalCard.css';
+import Tooltip  from '../Tooltip/Tooltip';
+import PropTypes from 'prop-types';
 
 const GoalCard = ({ goal, onEdit, onDelete }) => {
     const handleEdit = () => {
@@ -69,21 +71,42 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
                 <h3>Time-bound: {goal.timebound}</h3>
             </div>
             <div className="goalcard-actions">
+                <Tooltip content="Edit">
                 <button onClick={handleEdit} title="Edit">
                     <PencilIcon className="goalcard-icon" />
                 </button>
+                </Tooltip>
+                <Tooltip content="Delete">
                 <button onClick={handleDelete} title="Delete">
                     <TrashIcon className="goalcard-icon" />
                 </button>
+                </Tooltip>
+                <Tooltip content="Share">
                 <button onClick={handleShareToNotes} title="Share">
                     <ShareIcon className="goalcard-icon" />
                 </button>
+                </Tooltip>
+                <Tooltip content="Download">
                 <button onClick={handleDownload} title="Download">
                     <DownloadIcon className="goalcard-icon" />
                 </button>
+                </Tooltip>
             </div>
         </div>
     );
+};
+
+GoalCard.propTypes = {
+    goal: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        specific: PropTypes.string.isRequired,
+        measurable: PropTypes.string.isRequired,
+        achievable: PropTypes.string.isRequired,
+        relevant: PropTypes.string.isRequired,
+        timebound: PropTypes.string.isRequired,
+    }).isRequired,
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
 };
 
 export default GoalCard;
