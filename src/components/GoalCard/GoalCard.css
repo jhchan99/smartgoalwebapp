@@ -6,8 +6,13 @@
   margin-bottom: 12px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
+}
+
+.goalcard-details {
+  flex: 1;
 }
 
 .goalcard-details h3 {
@@ -28,8 +33,16 @@
   display: flex;
   gap: 12px;
   justify-content: flex-end;
+  align-items: flex-start;
+  flex-shrink: 0;
+  margin-top: 2px; /* Slight adjustment to align with first line of text */
 }
 
+.goalcard-dropdown {
+  /* Additional styling for the dropdown in card context */
+}
+
+/* Legacy button styles for backward compatibility */
 .goalcard-actions button {
   background: none;
   border: none;
@@ -41,11 +54,4 @@
 
 .goalcard-actions button:hover {
   background: #e0e7ff;
-}
-
-.goalcard-icon {
-  width: 22px;
-  height: 22px;
-  color: #2563eb;
-  vertical-align: middle;
 }

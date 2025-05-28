@@ -65,7 +65,6 @@
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0;
-  padding: 1rem 0;
 }
 
 .sidebar-icon {
@@ -81,8 +80,8 @@
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e5e7eb;
   background: #fff;
-  height: 76px;
-  min-height: 76px;
+  height: 64px;
+  min-height: 64px;
   box-sizing: border-box;
   overflow: visible;
   position: relative;

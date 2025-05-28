@@ -4,6 +4,7 @@ import Tooltip from "../Tooltip/Tooltip";
 import NotificationBadge from "../NotificationBadge/NotificationBadge";
 import './Header.css';
 import logo from '../../assets/success_logo.png';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
 
 const Header = ({ sidebarOpen, onSidebarToggle, unviewedCount = 0 }) => {
   return (
@@ -32,7 +33,6 @@ const Header = ({ sidebarOpen, onSidebarToggle, unviewedCount = 0 }) => {
       </div>
       
       <div className="header-center">
-        <img src={logo} alt="Success Goals" className="app-logo" />
         <p className="app-subtitle">Turn ambition into action — instantly.</p>
       </div>
       

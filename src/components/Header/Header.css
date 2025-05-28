@@ -5,8 +5,8 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  height: 76px; /* Standardized height to match sidebar header */
-  min-height: 76px;
+  height: 64px; /* Standardized height to match sidebar header */
+  min-height: 64px;
   box-sizing: border-box;
   background: #fff;
   border-bottom: 1px solid #e5e7eb;

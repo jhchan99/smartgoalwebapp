@@ -1,13 +1,12 @@
 import React from 'react';
 import { ShareIcon, DownloadIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import './GoalCard.css';
-import Tooltip  from '../Tooltip/Tooltip';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import PropTypes from 'prop-types';
 
 const GoalCard = ({ goal, onEdit, onDelete }) => {
     const handleEdit = () => {
         if (onEdit) onEdit(goal);
-        
     };
 
     const handleDelete = () => {
@@ -60,6 +59,30 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
         URL.revokeObjectURL(url);
     };
 
+    const dropdownOptions = [
+        {
+            label: 'Edit',
+            icon: <PencilIcon />,
+            onClick: handleEdit
+        },
+        {
+            label: 'Share',
+            icon: <ShareIcon />,
+            onClick: handleShareToNotes
+        },
+        {
+            label: 'Download',
+            icon: <DownloadIcon />,
+            onClick: handleDownload
+        },
+        {
+            label: 'Delete',
+            icon: <TrashIcon />,
+            onClick: handleDelete,
+            className: 'danger'
+        }
+    ];
+
     return (
         <div className="goalcard-container">
             <div className="goalcard-details">
@@ -71,26 +94,11 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
                 <h3>Time-bound: {goal.timebound}</h3>
             </div>
             <div className="goalcard-actions">
-                <Tooltip content="Edit">
-                <button onClick={handleEdit} title="Edit">
-                    <PencilIcon className="goalcard-icon" />
-                </button>
-                </Tooltip>
-                <Tooltip content="Delete">
-                <button onClick={handleDelete} title="Delete">
-                    <TrashIcon className="goalcard-icon" />
-                </button>
-                </Tooltip>
-                <Tooltip content="Share">
-                <button onClick={handleShareToNotes} title="Share">
-                    <ShareIcon className="goalcard-icon" />
-                </button>
-                </Tooltip>
-                <Tooltip content="Download">
-                <button onClick={handleDownload} title="Download">
-                    <DownloadIcon className="goalcard-icon" />
-                </button>
-                </Tooltip>
+                <DropdownMenu 
+                    options={dropdownOptions}
+                    position="bottom-right"
+                    className="goalcard-dropdown"
+                />
             </div>
         </div>
     );
