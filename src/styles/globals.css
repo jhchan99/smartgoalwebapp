@@ -32,10 +32,18 @@ body {
 
 .app-layout {
   @apply flex;
+  margin-top: 52px; /* Account for standardized header height */
 }
 
 .main-content {
   @apply flex-1 p-6;
+  margin-left: 0;
+  transition: margin-left 0.25s ease;
+}
+
+/* When sidebar is open, adjust main content margin */
+.main-content.with-sidebar {
+  margin-left: 400px;
 }
 
 

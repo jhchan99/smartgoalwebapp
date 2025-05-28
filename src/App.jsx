@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GoalsForm from "./components/GoalsForm/GoalsForm";
 import History from "./components/History/History";
 import Header from "./components/Header/Header";
@@ -19,19 +19,42 @@ import Sidebar from "./components/Sidebar/Sidebar";
 
 const App = () => {
     const { history, setHistory, editingGoal, setEditingGoal, handleDelete, unviewedCount, markGoalsAsViewed } = useGoals();
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+
+    const handleSidebarToggle = () => {
+        const newOpenState = !sidebarOpen;
+        setSidebarOpen(newOpenState);
+        
+        // Mark goals as viewed when opening sidebar
+        if (newOpenState && unviewedCount > 0) {
+            markGoalsAsViewed();
+        }
+    };
+
+    const handleSidebarClose = () => {
+        setSidebarOpen(false);
+    };
 
     return (
         <div>
-            <Header />
+            <Header 
+                sidebarOpen={sidebarOpen}
+                onSidebarToggle={handleSidebarToggle}
+                unviewedCount={unviewedCount}
+            />
             <div className="app-layout">
-                <Sidebar unviewedCount={unviewedCount} onOpen={markGoalsAsViewed}>
+                <Sidebar 
+                    isOpen={sidebarOpen}
+                    onClose={handleSidebarClose}
+                    unviewedCount={unviewedCount}
+                >
                     <History 
                         history={history}
                         onEdit={setEditingGoal} 
                         onDelete={handleDelete}
                     />
                 </Sidebar>
-                <main className="main-content">
+                <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
                     <GoalsForm 
                         history={history} 
                         setHistory={setHistory}

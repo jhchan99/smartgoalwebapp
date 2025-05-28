@@ -61,12 +61,11 @@
   z-index: 2000;
 }
 
-
 .sidebar-content {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0;
-  padding: 1rem 0; /* Reduced top padding since header provides spacing */
+  padding: 1rem 0;
 }
 
 .sidebar-icon {
@@ -74,7 +73,7 @@
   height: 24px;
 }
 
-/* Sidebar Header */
+/* Sidebar Header - STANDARDIZED HEIGHT */
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -82,7 +81,9 @@
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e5e7eb;
   background: #fff;
-  min-height: 60px;
+  height: 76px;
+  min-height: 76px;
+  box-sizing: border-box;
   overflow: visible;
   position: relative;
 }
@@ -126,6 +127,5 @@
 
 .sidebar-close-btn:focus {
   outline: none;
-  ring: 2px solid #3b82f6;
-  ring-offset: 2px;
+  box-shadow: 0 0 0 2px #3b82f6;
 }
