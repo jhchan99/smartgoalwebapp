@@ -13,9 +13,6 @@ body {
 }
 
 /* Layout for App */
-.app-header {
-  @apply py-6 px-4 bg-white shadow;
-}
 
 .app-title {
   @apply text-3xl font-bold text-gray-900;
@@ -35,18 +32,20 @@ body {
 
 .app-layout {
   @apply flex;
+  margin-top: 52px; /* Account for standardized header height */
 }
 
 .main-content {
   @apply flex-1 p-6;
+  margin-left: 0;
+  transition: margin-left 0.25s ease;
 }
 
-.sidebar {
-  width: 320px;
-  background: #fff;
-  border-right: 1px solid #e0e0e0;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+/* When sidebar is open, adjust main content margin */
+.main-content.with-sidebar {
+  margin-left: 400px;
 }
+
 
 :root {
     --background: 0 0% 100%;

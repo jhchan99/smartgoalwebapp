@@ -1,11 +1,12 @@
 import React from 'react';
 import { ShareIcon, DownloadIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import './GoalCard.css';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import PropTypes from 'prop-types';
 
 const GoalCard = ({ goal, onEdit, onDelete }) => {
     const handleEdit = () => {
         if (onEdit) onEdit(goal);
-        
     };
 
     const handleDelete = () => {
@@ -58,6 +59,30 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
         URL.revokeObjectURL(url);
     };
 
+    const dropdownOptions = [
+        {
+            label: 'Edit',
+            icon: <PencilIcon />,
+            onClick: handleEdit
+        },
+        {
+            label: 'Share',
+            icon: <ShareIcon />,
+            onClick: handleShareToNotes
+        },
+        {
+            label: 'Download',
+            icon: <DownloadIcon />,
+            onClick: handleDownload
+        },
+        {
+            label: 'Delete',
+            icon: <TrashIcon />,
+            onClick: handleDelete,
+            className: 'danger'
+        }
+    ];
+
     return (
         <div className="goalcard-container">
             <div className="goalcard-details">
@@ -69,21 +94,27 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
                 <h3>Time-bound: {goal.timebound}</h3>
             </div>
             <div className="goalcard-actions">
-                <button onClick={handleEdit} title="Edit">
-                    <PencilIcon className="goalcard-icon" />
-                </button>
-                <button onClick={handleDelete} title="Delete">
-                    <TrashIcon className="goalcard-icon" />
-                </button>
-                <button onClick={handleShareToNotes} title="Share">
-                    <ShareIcon className="goalcard-icon" />
-                </button>
-                <button onClick={handleDownload} title="Download">
-                    <DownloadIcon className="goalcard-icon" />
-                </button>
+                <DropdownMenu 
+                    options={dropdownOptions}
+                    position="bottom-right"
+                    className="goalcard-dropdown"
+                />
             </div>
         </div>
     );
+};
+
+GoalCard.propTypes = {
+    goal: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        specific: PropTypes.string.isRequired,
+        measurable: PropTypes.string.isRequired,
+        achievable: PropTypes.string.isRequired,
+        relevant: PropTypes.string.isRequired,
+        timebound: PropTypes.string.isRequired,
+    }).isRequired,
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
 };
 
 export default GoalCard;

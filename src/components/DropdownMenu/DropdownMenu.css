@@ -1,0 +1,138 @@
+.dropdown-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-trigger:hover {
+  background: #e0e7ff;
+}
+
+.dropdown-trigger-icon {
+  width: 22px;
+  height: 22px;
+  color: #2563eb;
+}
+
+.dropdown-content {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 160px;
+  padding: 4px 0;
+  animation: dropdown-fade-in 0.15s ease-out;
+}
+
+.dropdown-bottom-right {
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+}
+
+.dropdown-bottom-left {
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+}
+
+.dropdown-top-right {
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 4px;
+}
+
+.dropdown-top-left {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 4px;
+}
+
+.dropdown-option {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #374151;
+  transition: background 0.15s;
+}
+
+.dropdown-option:hover {
+  background: #f3f4f6;
+}
+
+.dropdown-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dropdown-option:disabled:hover {
+  background: none;
+}
+
+.dropdown-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.dropdown-option-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dropdown-option-text {
+  flex: 1;
+}
+
+.dropdown-option.danger {
+  color: #dc2626;
+}
+
+.dropdown-option.danger:hover {
+  background: #fef2f2;
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dropdown-content {
+    min-width: 140px;
+  }
+  
+  .dropdown-option {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+}
