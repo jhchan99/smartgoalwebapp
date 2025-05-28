@@ -68,8 +68,8 @@
 }
 
 .sidebar-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
 /* Sidebar Header - STANDARDIZED HEIGHT */
@@ -106,8 +106,8 @@
 }
 
 .sidebar-close-btn {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   background: #f9fafb;
   border: none;
   border-radius: 8px;
