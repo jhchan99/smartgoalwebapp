@@ -4,8 +4,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 1.5rem;
-  height: 64px; /* Standardized height to match sidebar header */
+  padding: .5rem .5rem;
+  height: 64px;
   min-height: 64px;
   box-sizing: border-box;
   background: #fff;
@@ -39,40 +39,7 @@
   gap: 1rem;
 }
 
-.sidebar-toggle-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.sidebar-toggle-btn {
-  width: 40px;
-  height: 40px;
-  background: #f9fafb;
-  border: none;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: #6b7280;
-}
-
-.sidebar-toggle-btn:hover {
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.sidebar-toggle-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #3b82f6;
-}
-
-.sidebar-icon {
-  width: 24px;
-  height: 24px;
-}
-
+/* App Subtitle */
 .app-subtitle {
   font-size: 1.75rem;
   font-weight: 600;
@@ -115,10 +82,5 @@
   .app-logo {
     width: 60px;
     height: 60px;
-  }
-  
-  .sidebar-toggle-btn {
-    width: 36px;
-    height: 36px;
   }
 }

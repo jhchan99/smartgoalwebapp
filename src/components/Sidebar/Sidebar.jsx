@@ -1,6 +1,5 @@
 import React from "react";
-import { TbLayoutSidebar } from "react-icons/tb";
-import Tooltip from "../Tooltip/Tooltip";
+import SidebarButton from '../SidebarButton/SidebarButton';
 import success_logo from "../../assets/success_logo.png";
 import "./Sidebar.css";
 
@@ -13,19 +12,10 @@ const Sidebar = ({ children, isOpen, onClose }) => {
           <img src={success_logo} alt="Logo" className="sidebar-logo-img" />
         </div>
         
-        <Tooltip
-          content="Close sidebar"
-          position="bottom"
-          noArrow={true}
-        >
-          <button
-            className="sidebar-close-btn"
-            onClick={onClose}
-            aria-label="Close sidebar"
-          >
-            <TbLayoutSidebar className="sidebar-icon" />
-          </button>
-        </Tooltip>
+        <SidebarButton
+          variant="close"
+          onClick={onClose}
+        />
       </div>
       
       <div className="sidebar-content">

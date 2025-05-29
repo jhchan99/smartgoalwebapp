@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Tooltip.css';
 
 const Tooltip = ({ 
@@ -13,8 +13,22 @@ const Tooltip = ({
   const [isVisible, setIsVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
 
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
   const showTooltip = () => {
     if (disabled) return;
+    
+    // Clear any existing timeout first
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
     
     const id = setTimeout(() => {
       setIsVisible(true);
@@ -30,6 +44,14 @@ const Tooltip = ({
     setIsVisible(false);
   };
 
+  // Hide tooltip immediately on any interaction that should dismiss it
+  const handleInteraction = (e) => {
+    // Only hide on actual user interactions, not programmatic events
+    if (e.isTrusted) {
+      hideTooltip();
+    }
+  };
+
   if (!content) return children;
 
   return (
@@ -39,16 +61,18 @@ const Tooltip = ({
       onMouseLeave={hideTooltip}
       onFocus={showTooltip}
       onBlur={hideTooltip}
+      onMouseDown={handleInteraction}
+      onClick={handleInteraction}
     >
       {children}
       {isVisible && (
         <div 
-          className={`tooltip tooltip-${position} ${noArrow ? 'tooltip-no-arrow' : ''}`}
+          className={`tooltip tooltip-${position}`}
           role="tooltip"
           aria-hidden={!isVisible}
         >
           {content}
-          {!noArrow && <div className="tooltip-arrow" />}
+          {!noArrow && <div className="tooltip-arrow"/>}
         </div>
       )}
     </div>

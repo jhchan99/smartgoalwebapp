@@ -89,7 +89,7 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
 
     const handleShareToNotes = async () => {
         const goalText = `
-            SMART Goal
+            Success Goal
             -----------
             Title: ${goalData.title}
             Specific: ${goalData.specific}
@@ -199,6 +199,7 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
                     onChange={handleChange}
                 />
             </div>
+            {/* Time-bound field */}
             <div className="goalsform-field">
                 <label htmlFor="timebound" className="goalsform-label">Keep it time-bound</label>
                 <input
@@ -207,7 +208,10 @@ const GoalsForm = ({history, setHistory, editingGoal, setEditingGoal}) => {
                     name="timebound"
                     className="goalsform-input"
                     value={goalData.timebound}
+                    min={new Date().toISOString().split('T')[0]}
                     onChange={handleChange}
+                    title="Select a deadline for your goal"
+                    required
                 />
             </div>
             <div className="goalsform-actions">

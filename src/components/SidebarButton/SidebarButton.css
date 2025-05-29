@@ -1,0 +1,55 @@
+.sidebar-button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.sidebar-button {
+  width: calc(var(--spacing) * 12); /* 48px */
+  height: calc(var(--spacing) * 12); /* 48px */
+  background: var(--interactive-bg-tertiary-default);
+  border: none;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--ease-in-out);
+  color: var(--text-secondary);
+}
+
+.sidebar-button:hover {
+  background: var(--interactive-bg-tertiary-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.sidebar-button:focus-visible {
+  outline: 2px solid var(--border-accent);
+  outline-offset: 2px;
+}
+
+.sidebar-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.sidebar-button__icon {
+  width: calc(var(--spacing) * 6); /* 24px */
+  height: calc(var(--spacing) * 6); /* 24px */
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .sidebar-button {
+    width: calc(var(--spacing) * 9); /* 36px */
+    height: calc(var(--spacing) * 9); /* 36px */
+  }
+  
+  .sidebar-button__icon {
+    width: calc(var(--spacing) * 5); /* 20px */
+    height: calc(var(--spacing) * 5); /* 20px */
+  }
+}
