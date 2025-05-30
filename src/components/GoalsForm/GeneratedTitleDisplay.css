@@ -1,0 +1,138 @@
+.generated-title-container {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-display-mode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.generated-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.generated-title.placeholder {
+  color: #94a3b8;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.generated-title.custom {
+  color: #2563eb;
+}
+
+.title-edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+}
+
+.title-edit-btn:hover {
+  background: #e2e8f0;
+  opacity: 1;
+}
+
+.title-edit-icon {
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+}
+
+.title-edit-mode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.title-edit-input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: #fff;
+  color: #1e293b;
+}
+
+.title-edit-input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.title-edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.title-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-action-btn.save:hover {
+  background: #dcfce7;
+}
+
+.title-action-btn.cancel:hover {
+  background: #fef2f2;
+}
+
+.title-action-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.title-action-btn.save .title-action-icon {
+  color: #16a34a;
+}
+
+.title-action-btn.cancel .title-action-icon {
+  color: #dc2626;
+}
+
+.title-status {
+  margin-top: 8px;
+}
+
+.custom-title-indicator {
+  font-size: 0.75rem;
+  color: #2563eb;
+  background: #dbeafe;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}

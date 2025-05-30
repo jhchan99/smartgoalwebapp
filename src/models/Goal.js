@@ -19,6 +19,20 @@ class Goal {
             typeof this.timebound === 'string'
         );
     }
+
+    // Add a method to format the goal as text
+    toFormattedText() {
+        return `
+            Success Goal
+            -----------
+            Title: ${this.title}
+            Specific: ${this.specific}
+            Measurable: ${this.measurable}
+            Achievable: ${this.achievable}
+            Relevant: ${this.relevant}
+            Time-bound: ${this.timebound}
+        `;
+    }
 }
 
 export default Goal;

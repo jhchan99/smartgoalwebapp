@@ -1,0 +1,12 @@
+.loading-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  
+  .loading-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
