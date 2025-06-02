@@ -73,7 +73,7 @@ export const useGoalForm = (history, setHistory, editingGoal, setEditingGoal) =>
     const handleSave = () => {
         if (!hasGoalContent(goalData)) {
             alert('Please fill in at least one field before saving your goal.');
-            return;
+            return false;
         }
 
         const finalTitle = customTitle || generatedTitle || 'Untitled Goal';
@@ -100,6 +100,7 @@ export const useGoalForm = (history, setHistory, editingGoal, setEditingGoal) =>
         }
         
         clearForm();
+        return true; // Indicate successful save
     };
 
     // Clear form

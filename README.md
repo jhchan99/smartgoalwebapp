@@ -75,29 +75,31 @@ A modern web application for creating, managing, and tracking SMART (Specific, M
 
 ## 📋 Development Roadmap
 
-### Phase 1: File Upload Foundation
-- [ ] File upload component with drag-and-drop
-- [ ] File type validation and size limits
-- [ ] Basic file storage and management
-- [ ] PDF text extraction functionality
-
-### Phase 2: AI Integration
+### Phase 1: AI Integration
 - [ ] AI service integration for content analysis
 - [ ] Goal generation algorithms
 - [ ] Content summarization features
 - [ ] Smart goal suggestions engine
 
-### Phase 3: Enhanced UX
+
+### Phase 2: Enhanced UX
 - [ ] User accounts and authentication
 - [ ] Goal categorization and filtering
 - [ ] Progress tracking and analytics
 - [ ] Mobile app development
+- [ ] Create reminders or notifications on device when saving goal
 
-### Phase 4: Advanced Features
+### Phase 3: Advanced Features
 - [ ] Goal dependencies and relationships
 - [ ] Team goals and collaboration
 - [ ] Advanced AI insights and coaching
 - [ ] Integration with external apps
+
+### Phase 4: File Upload Foundation
+- [ ] File upload component with drag-and-drop
+- [ ] File type validation and size limits
+- [ ] Basic file storage and management
+- [ ] PDF text extraction functionality
 
 ## 🏁 Getting Started
 

@@ -1,0 +1,368 @@
+.reminder-card {
+    width: 400px;
+    flex-shrink: 0;
+    padding: 32px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    overflow-y: auto;
+    max-height: calc(90vh - 64px);
+}
+
+.reminder-card.slide-in {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.reminder-card.slide-out {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* bounce in right */
+@keyframes bounce-in-right {
+    0% {
+      opacity: 0;
+      transform: translateX(2000px);
+    }
+    60% {
+      opacity: 1;
+      transform: translateX(-30px);
+    }
+    80% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+  }
+
+.reminder-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+}
+
+.reminder-card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reminder-card-title h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #22223b;
+}
+
+.reminder-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--text-accent);
+}
+
+.reminder-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reminder-close-btn:hover {
+    background-color: #e0e7ff;
+}
+
+.close-icon {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+}
+
+.reminder-card-content {
+    padding: 0;
+    margin-bottom: 24px;
+}
+
+.reminder-subtitle {
+    margin: 0 0 24px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.reminder-subtitle strong {
+    color: #22223b;
+}
+
+.reminder-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.reminder-option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reminder-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+}
+
+.reminder-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    transition: all 0.15s;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.reminder-checkbox input:checked + .checkmark {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.reminder-checkbox input:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.reminder-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #22223b;
+    flex: 1;
+}
+
+.option-icon {
+    width: 18px;
+    height: 18px;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.time-input,
+.day-select,
+.date-input {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    width: fit-content;
+    margin-left: 64px;
+    transition: border-color 0.15s;
+    background: #f9fafb;
+    color: #22223b;
+}
+
+.time-input:focus,
+.day-select:focus,
+.date-input:focus {
+    border-color: #2563eb;
+    outline: none;
+    background: #fff;
+}
+
+.custom-dates-section {
+    margin-left: 64px;
+}
+
+.custom-dates-section > label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #22223b;
+    font-size: 14px;
+}
+
+.custom-date-input {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.add-date-btn {
+    padding: 8px 16px;
+    background: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.add-date-btn:hover {
+    background: #16a34a;
+}
+
+.add-date-btn:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+.custom-dates-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.custom-date-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f3f4f6;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #22223b;
+    border: 1px solid #e5e7eb;
+}
+
+.remove-date-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.15s;
+}
+
+.remove-date-btn:hover {
+    background: #dc2626;
+    color: white;
+}
+
+.reminder-card-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.reminder-skip-btn {
+    background: none;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.reminder-skip-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    color: #22223b;
+}
+
+.reminder-set-btn {
+    background: #22c55e;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reminder-set-btn:hover:not(:disabled) {
+    background: #16a34a;
+}
+
+.reminder-set-btn:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reminder-card {
+        transition: none;
+    }
+}
+
+.dark .checkmark {
+    border-color: #374151;
+}
+
+.dark .reminder-checkbox input:checked + .checkmark {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.dark .time-input,
+.dark .day-select,
+.dark .date-input {
+    background-color: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+}
+
+.dark .time-input:focus,
+.dark .day-select:focus,
+.dark .date-input:focus {
+    border-color: #2563eb;
+    background-color: #1f2937;
+}
+
+@media (max-width: 1024px) {
+    .reminder-card {
+        width: 100%;
+        transform: translateY(100%);
+        margin-top: 24px;
+    }
+    
+    .reminder-card.slide-in {
+        transform: translateY(0);
+    }
+    
+    .reminder-card.slide-out {
+        transform: translateY(100%);
+    }
+} 
