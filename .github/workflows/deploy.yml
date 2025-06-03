@@ -37,7 +37,7 @@ jobs:
       if: github.ref == 'refs/heads/staging'
       run: |
         gcloud run deploy smart-goal-app-staging \
-          --source . \
+          --source ./frontend \
           --region ${{ env.REGION }} \
           --allow-unauthenticated \
           --project ${{ env.PROJECT_ID }}
@@ -46,7 +46,7 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         gcloud run deploy smart-goal-app-service \
-          --source . \
+          --source ./frontend \
           --region ${{ env.REGION }} \
           --allow-unauthenticated \
           --project ${{ env.PROJECT_ID }}
