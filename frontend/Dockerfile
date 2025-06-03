@@ -7,7 +7,10 @@ WORKDIR /app
 # Copy package.json and package-lock.json first to leverage Docker cache
 # if dependencies haven't changed. npm ci is perfect for reproducible builds.
 COPY package.json package-lock.json ./
-RUN npm ci
+
+# Clean npm cache and install dependencies
+RUN npm cache clean --force
+RUN npm install
 
 # Copy the rest of your app's source code
 COPY . .
