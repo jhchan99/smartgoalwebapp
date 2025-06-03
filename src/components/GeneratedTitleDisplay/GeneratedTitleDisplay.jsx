@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PencilIcon, CheckIcon, XIcon } from '@heroicons/react/outline';
-import LoadingBubbles from './LoadingBubbles';
+import LoadingBubbles from '../LoadingBubbles/LoadingBubbles';
 
 const GeneratedTitleDisplay = ({ 
   generatedTitle, 

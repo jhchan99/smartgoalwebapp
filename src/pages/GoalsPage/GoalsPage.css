@@ -1,0 +1,114 @@
+.goals-page-goals-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  transition: grid-template-columns 0.3s ease-in-out;
+}
+
+.goals-page-goals-card.show-reminder {
+  grid-template-columns: 1fr 500px; /* Fixed width for reminder card */
+  transition: grid-template-columns 0.2s ease-in-out;
+}
+
+.goals-card-container {
+  min-width: 0; /* Prevents grid overflow */
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Goals card animated state - visible */
+.goals-card-container.animated {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* When reminder is shown, slide goals card to make room */
+.goals-page-goals-card.show-reminder .goals-card-container.animated {
+  transform: translateX(-20px);
+}
+
+.reminder-card-container {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease-in-out;
+}
+
+.reminder-card-container.slide-in {
+  opacity: 1;
+  transform: translateX(0);
+  animation: bounce-in-right 0.6s ease-out forwards;
+}
+
+/* bounce in right */
+@keyframes bounce-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-10px);
+  }
+  80% { 
+    transform: translateX(5px); 
+  }
+  100% { 
+    opacity: 1;
+    transform: translateX(0); 
+  }
+}
+
+/* Goals card slide-in animation on initial load */
+.goals-card-container {
+  animation: slide-in-left 0.5s ease-out forwards;
+}
+
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .goals-page-goals-card.show-reminder {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  
+  /* On mobile, slide goals card up when reminder appears */
+  .goals-page-goals-card.show-reminder .goals-card-container {
+    transform: translateY(-10px);
+  }
+  
+  .reminder-card-container {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  
+  .reminder-card-container.slide-in {
+    transform: translateY(0);
+    opacity: 1;
+    animation: slide-up 0.3s ease-out forwards;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

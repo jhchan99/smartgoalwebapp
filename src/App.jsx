@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GoalsForm from "./components/GoalsForm/GoalsForm";
+import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import History from "./components/History/History";
 import Header from "./components/Header/Header";
 import { useGoals } from './hooks/useGoals';
@@ -11,15 +11,11 @@ import Sidebar from "./components/Sidebar/Sidebar";
 // TODO: implement branding and logo
 // TODO: implement long term storage
 // TODO: implement user accounts for saving goals
-// TODO: when user saves goal, if the sidebar is closed, create an animation that shaws the goal being saved to history
-//      - this could be a simple notification bubble that appears on the toggle button
-//      - the bubble could be a simple text bubble that says "Goal saved"
-//      - the bubble could be a simple icon bubble that says "Goal saved"
-//      - or if the user has unseen goals, 
+// TODO: suggestions for goals, as user is typing, we will have suggestions for the length of the goal
 
 const App = () => {
     const { history, setHistory, editingGoal, setEditingGoal, handleDelete, unviewedCount, markGoalsAsViewed } = useGoals();
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const handleSidebarToggle = () => {
         const newOpenState = !sidebarOpen;
@@ -55,7 +51,7 @@ const App = () => {
                     />
                 </Sidebar>
                 <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
-                    <GoalsForm 
+                    <GoalsPage 
                         history={history} 
                         setHistory={setHistory}
                         editingGoal={editingGoal}

@@ -6,11 +6,23 @@
     margin: 0;
 }
 
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .history-title {
     font-size: 1.25rem;
     font-weight: bold;
     color: #22223b;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+}
+
+.history-stats {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 8px;
 }
 
 .history-empty {

@@ -1,41 +1,40 @@
 .reminder-card {
-    width: 400px;
-    flex-shrink: 0;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 32px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 0.3s ease-out;
-    overflow-y: auto;
-    max-height: calc(90vh - 64px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
 }
 
-.reminder-card.slide-in {
-    transform: translateX(0);
-    opacity: 1;
-}
 
-.reminder-card.slide-out {
-    transform: translateX(100%);
-    opacity: 0;
-}
-
-/* bounce in right */
-@keyframes bounce-in-right {
-    0% {
-      opacity: 0;
-      transform: translateX(2000px);
+@media (max-width: 1400px) {
+    .reminder-card.slide-in {
+        margin-left: 0;
+        left: auto;
+        right: 32px;
+        transform: translateY(-50%);
     }
-    60% {
-      opacity: 1;
-      transform: translateX(-30px);
+}
+
+@media (max-width: 768px) {
+    .reminder-card {
+        width: calc(100% - 32px);
+        max-width: none;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        transform: none;
+        margin-left: 0;
+        max-height: calc(100vh - 32px);
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
     }
-    80% { transform: translateX(10px); }
-    100% { transform: translateX(0); }
-  }
+    
+    .reminder-card.slide-in {
+        opacity: 1;
+    }
+}
 
 .reminder-card-header {
     display: flex;
@@ -63,22 +62,6 @@
     width: 24px;
     height: 24px;
     color: var(--text-accent);
-}
-
-.reminder-close-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 6px;
-    transition: background-color 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.reminder-close-btn:hover {
-    background-color: #e0e7ff;
 }
 
 .close-icon {
@@ -349,20 +332,4 @@
 .dark .date-input:focus {
     border-color: #2563eb;
     background-color: #1f2937;
-}
-
-@media (max-width: 1024px) {
-    .reminder-card {
-        width: 100%;
-        transform: translateY(100%);
-        margin-top: 24px;
-    }
-    
-    .reminder-card.slide-in {
-        transform: translateY(0);
-    }
-    
-    .reminder-card.slide-out {
-        transform: translateY(100%);
-    }
 } 

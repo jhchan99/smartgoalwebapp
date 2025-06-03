@@ -5,7 +5,12 @@ import './History.css';
 const History = ({ history, onEdit, onDelete }) => {
     return (
         <div className="history-container">
-            <h3 className="history-title">Goal History</h3>
+            <div className="history-header">
+                <h3 className="history-title">Goal History</h3>
+                <div className="history-stats">
+                    <small>{history.length} goals saved</small>
+                </div>
+            </div>
             {history.length === 0 ? (
                 <p className="history-empty">No goals saved yet.</p>
             ) : (

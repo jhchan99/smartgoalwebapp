@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { BellIcon, CalendarIcon, ClockIcon } from '@heroicons/react/outline';
 import './ReminderCard.css';
 
-const ReminderCard = ({ show, goal, onClose, onReminderSet }) => {
-    const [isSliding, setIsSliding] = useState(false);
+const ReminderCard = ({goal, onClose, onReminderSet }) => {
     const [reminders, setReminders] = useState({
         daily: false,
         weekly: false,
@@ -15,15 +14,6 @@ const ReminderCard = ({ show, goal, onClose, onReminderSet }) => {
     const [dailyTime, setDailyTime] = useState('09:00');
     const [weeklyDay, setWeeklyDay] = useState('monday');
     const [customDate, setCustomDate] = useState('');
-
-    useEffect(() => {
-        if (show) {
-            setIsSliding(true);
-        }
-        return () => {
-            setIsSliding(false);
-        };
-    }, [show]);
 
     const handleClose = () => {
         onClose();
@@ -72,8 +62,7 @@ const ReminderCard = ({ show, goal, onClose, onReminderSet }) => {
 
 
     return (
-        <div className={`reminder-card-overlay ${isSliding ? 'show' : ''}`}>
-            <div className={`reminder-card ${isSliding ? 'slide-in' : 'slide-out'}`}>
+            <div className={`reminder-card`}>
                 <div className="reminder-card-header">
                     <div className="reminder-card-title">
                         <BellIcon className="reminder-icon" />
@@ -222,7 +211,6 @@ const ReminderCard = ({ show, goal, onClose, onReminderSet }) => {
                     </button>
                 </div>
             </div>
-        </div>
     );
 };
 
