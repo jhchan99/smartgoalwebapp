@@ -7,9 +7,12 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:80"
+      - "3000:8080"
     container_name: smartgoalwebapp
     restart: unless-stopped
+    volumes:
+      - ./frontend:/app/frontend
+      - ./backend:/app/backend
     environment:
       - PORT=8080  # Explicitly set the PORT environment variable
       
