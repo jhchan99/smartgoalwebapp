@@ -1,4 +1,5 @@
 // import React, { useState } from 'react';
+import React, {useImperativeHandle, forwardRef} from 'react';
 import { ShareIcon, DownloadIcon, TrashIcon } from '@heroicons/react/outline';
 import './GoalsForm.css';
 import GeneratedTitleDisplay from '../GeneratedTitleDisplay/GeneratedTitleDisplay';
@@ -6,7 +7,7 @@ import { useGoalForm } from '../../hooks/useGoalForm';
 import { getAllFieldValidations } from '../../utils/goalValidation';
 import { shareGoal, downloadGoal } from '../../utils/goalFormUtils';
 
-const GoalsForm = ({ history, setHistory, editingGoal, setEditingGoal, onGoalSaved, setShowReminderCard }) => {
+const GoalsForm = forwardRef(({ history, setHistory, editingGoal, setEditingGoal, onGoalSaved, setShowReminderCard }, ref) => {
     const {
         goalData,
         generatedTitle,
@@ -69,6 +70,14 @@ const GoalsForm = ({ history, setHistory, editingGoal, setEditingGoal, onGoalSav
         
         return null;
     };
+
+    useImperativeHandle(ref, () => ({
+        clearForm,
+        getCurrentGoalData: () => ({
+            ...goalData,
+            title: customTitle || generatedTitle || 'Untitled Goal'
+        })
+    }));
 
     return (
         <div className="goalsform-container">
@@ -177,6 +186,6 @@ const GoalsForm = ({ history, setHistory, editingGoal, setEditingGoal, onGoalSav
             </div>
         </div>
     );
-};
+});
 
 export default GoalsForm;

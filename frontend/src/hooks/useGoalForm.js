@@ -99,7 +99,6 @@ export const useGoalForm = (history, setHistory, editingGoal, setEditingGoal) =>
             }, ...history]);
         }
         
-        clearForm();
         return true; // Indicate successful save
     };
 

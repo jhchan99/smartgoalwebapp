@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import GoalsForm from '../../components/GoalsFormCard/GoalsForm';
 import ReminderCard from '../../components/ReminderCard/ReminderCard';
 import './GoalsPage.css';
@@ -8,6 +8,7 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     const [savedGoal, setSavedGoal] = useState(null);
     const [isSliding, setIsSliding] = useState(false);
     const [goalsCardAnimated, setGoalsCardAnimated] = useState(false);
+    const goalsFormRef = useRef();
 
     useEffect(() => {
         // Animate goals card on initial load
@@ -35,14 +36,45 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     };
 
     const handleReminderClose = () => {
+        updateLatestGoal();
         setShowReminderCard(false);
         setSavedGoal(null);
+        goalsFormRef.current?.clearForm();
     };
 
     const handleReminderSet = (reminders) => {
-        console.log('Reminders set:', reminders);
+        updateLatestGoal();
         setShowReminderCard(false);
         setSavedGoal(null);
+        goalsFormRef.current?.clearForm();
+    };
+
+    // Helper to update the latest goal in history
+    const updateLatestGoal = () => {
+        const latestGoal = goalsFormRef.current?.getCurrentGoalData();
+        if (!latestGoal) return;
+
+        // If editing, update the correct index; otherwise, update the most recent
+        if (editingGoal && editingGoal.index !== undefined) {
+            const updatedHistory = [...history];
+            updatedHistory[editingGoal.index] = {
+                ...latestGoal,
+                dateSaved: new Date().toLocaleString(),
+                isViewed: false,
+                dateViewed: null
+            };
+            setHistory(updatedHistory);
+        } else {
+            // Replace the most recent goal (index 0)
+            const updatedHistory = [...history];
+            updatedHistory[0] = {
+                ...latestGoal,
+                dateSaved: new Date().toLocaleString(),
+                isViewed: false,
+                dateViewed: null
+            };
+            setHistory(updatedHistory);
+        }
     };
 
     return (
@@ -55,6 +87,7 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
                     setEditingGoal={setEditingGoal}
                     onGoalSaved={handleGoalSaved}
                     setShowReminderCard={setShowReminderCard}
+                    ref={goalsFormRef}
                 />
             </div>
             
