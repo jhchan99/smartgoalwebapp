@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import GoalsPage from "./pages/GoalsPage/GoalsPage";
-import History from "./components/History/History";
-import Header from "./components/Header/Header";
-import { useGoals } from './hooks/useGoals';
+import GoalsPage from "./pages/GoalsPage/GoalsPage/GoalsPage.jsx";
+import History from "./components/History/History.jsx";
+import Header from "./components/Header/Header.jsx";
+import { useGoals } from './hooks/useGoals.jsx';
 import './styles/globals.css';
-import Sidebar from "./components/Sidebar/Sidebar";
+import Sidebar from "./components/Sidebar/Sidebar.jsx";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login/Login.jsx";
+import Signup from "./pages/Signup/Signup.jsx";
 
 // TODO: Add a button to clear the history
 // TODO: fix mobile views
@@ -32,34 +35,47 @@ const App = () => {
     };
 
     return (
-        <div>
-            <Header 
-                sidebarOpen={sidebarOpen}
-                onSidebarToggle={handleSidebarToggle}
-                unviewedCount={unviewedCount}
-            />
-            <div className="app-layout">
-                <Sidebar 
-                    isOpen={sidebarOpen}
-                    onClose={handleSidebarClose}
-                    unviewedCount={unviewedCount}
-                >
-                    <History 
-                        history={history}
-                        onEdit={setEditingGoal} 
-                        onDelete={handleDelete}
-                    />
-                </Sidebar>
-                <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
-                    <GoalsPage 
-                        history={history} 
-                        setHistory={setHistory}
-                        editingGoal={editingGoal}
-                        setEditingGoal={setEditingGoal}
-                    />
-                </main>
-            </div>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route
+                    path="/"
+                    element={
+                        <div>
+                            <Header 
+                                sidebarOpen={sidebarOpen}
+                                onSidebarToggle={handleSidebarToggle}
+                                unviewedCount={unviewedCount}
+                            />
+                            <div className="app-layout">
+                                <Sidebar 
+                                    isOpen={sidebarOpen}
+                                    onClose={handleSidebarClose}
+                                    unviewedCount={unviewedCount}
+                                >
+                                    <History 
+                                        history={history}
+                                        onEdit={setEditingGoal} 
+                                        onDelete={handleDelete}
+                                    />
+                                </Sidebar>
+                                <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
+                                    <GoalsPage 
+                                        history={history} 
+                                        setHistory={setHistory}
+                                        editingGoal={editingGoal}
+                                        setEditingGoal={setEditingGoal}
+                                    />
+                                </main>
+                            </div>
+                        </div>
+                    }
+                />
+                {/* Optionally, redirect unknown routes */}
+                <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+        </Router>
     );
 };
 

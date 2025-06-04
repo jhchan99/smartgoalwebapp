@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import GoalsForm from '../../components/GoalsFormCard/GoalsForm';
-import ReminderCard from '../../components/ReminderCard/ReminderCard';
+import GoalsForm from '../../../components/GoalsFormCard/GoalsForm';
+import ReminderCard from '../../../components/ReminderCard/ReminderCard';
 import './GoalsPage.css';
 
 const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
