@@ -1,8 +1,13 @@
+version: '3.8'
 services:
-  web:
-    build: .
+  backend:
+    build: ./backend
     ports:
-      - "3000:8080"  # This looks correct
+      - "8080:8080"
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
     container_name: smartgoalwebapp
     restart: unless-stopped
     environment:

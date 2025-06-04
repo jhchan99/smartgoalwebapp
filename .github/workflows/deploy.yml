@@ -51,6 +51,14 @@ jobs:
           --allow-unauthenticated \
           --project ${{ env.PROJECT_ID }}
     
+    - name: Deploy backend
+      run: |
+        gcloud run deploy smart-goal-app-backend \
+          --source ./backend \
+          --region ${{ env.REGION }} \
+          --allow-unauthenticated \
+          --project ${{ env.PROJECT_ID }}
+    
     - name: Test build only (for PRs)
       if: github.event_name == 'pull_request'
       run: |
