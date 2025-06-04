@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { auth } from "../../auth/firebase";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../auth/firebase"; // adjust path as needed
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,12 +19,17 @@ export default function Login() {
   };
 
   const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
+    if (isSigningIn) return;
+    setIsSigningIn(true);
     try {
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, googleProvider);
       // Redirect or show success
     } catch (err) {
-      setError(err.message);
+      if (err.code !== "auth/cancelled-popup-request") {
+        setError(err.message);
+      }
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -35,15 +41,21 @@ export default function Login() {
         placeholder="Email"
         value={email}
         onChange={e => setEmail(e.target.value)}
+        autoComplete="email"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={e => setPassword(e.target.value)}
+        autoComplete="current-password"
       />
       <button type="submit">Login</button>
-      <button type="button" onClick={handleGoogleLogin}>
+      <button
+        type="button"
+        onClick={handleGoogleLogin}
+        disabled={isSigningIn}
+      >
         Sign in with Google
       </button>
       {error && <p>{error}</p>}
