@@ -81,7 +81,6 @@ A modern web application for creating, managing, and tracking SMART (Specific, M
 - [ ] Content summarization features
 - [ ] Smart goal suggestions engine
 
-
 ### Phase 2: Enhanced UX
 - [ ] User accounts and authentication
 - [ ] Goal categorization and filtering

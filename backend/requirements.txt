@@ -1,3 +1,4 @@
 fastapi
 uvicorn[standard]
+gunicorn
 # Add any other dependencies here
