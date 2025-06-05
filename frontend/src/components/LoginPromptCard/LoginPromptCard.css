@@ -1,0 +1,173 @@
+.login-prompt-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+.login-prompt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+}
+
+.login-prompt-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-prompt-title h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #22223b;
+}
+
+.login-prompt-icon {
+    width: 24px;
+    height: 24px;
+    color: #2563eb;
+}
+
+.login-prompt-content {
+    margin-bottom: 24px;
+}
+
+.login-prompt-hero {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0f2fe 100%);
+    border-radius: 12px;
+    border: 1px solid #e0e7ff;
+}
+
+.hero-icon {
+    width: 48px;
+    height: 48px;
+    color: #2563eb;
+    margin: 0 auto 16px;
+}
+
+.login-prompt-hero h4 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #22223b;
+}
+
+.login-prompt-hero p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.login-prompt-hero strong {
+    color: #22223b;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #f3f4f6;
+}
+
+.feature-icon {
+    width: 20px;
+    height: 20px;
+    color: #2563eb;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.feature-item strong {
+    display: block;
+    font-weight: 600;
+    color: #22223b;
+    margin-bottom: 4px;
+}
+
+.feature-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.login-prompt-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.login-prompt-skip-btn {
+    background: none;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.login-prompt-skip-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    color: #22223b;
+}
+
+.login-prompt-signin-btn {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+}
+
+.login-prompt-signin-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .login-prompt-card {
+        width: calc(100% - 32px);
+        max-width: none;
+        margin: 16px;
+        padding: 24px;
+    }
+    
+    .login-prompt-actions {
+        flex-direction: column;
+    }
+    
+    .login-prompt-skip-btn,
+    .login-prompt-signin-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

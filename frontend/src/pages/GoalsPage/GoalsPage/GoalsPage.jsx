@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GoalsForm from '../../../components/GoalsFormCard/GoalsForm';
 import ReminderCard from '../../../components/ReminderCard/ReminderCard';
+import LoginPromptCard from '../../../components/LoginPromptCard/LoginPromptCard';
+import { useAuth } from '../../../contexts/AuthContext';
 import './GoalsPage.css';
 
 const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     const [showReminderCard, setShowReminderCard] = useState(false);
+    const [showLoginPrompt, setShowLoginPrompt] = useState(false);
     const [savedGoal, setSavedGoal] = useState(null);
     const [isSliding, setIsSliding] = useState(false);
     const [goalsCardAnimated, setGoalsCardAnimated] = useState(false);
+    const { currentUser } = useAuth();
+    const navigate = useNavigate();
     const goalsFormRef = useRef();
 
     useEffect(() => {
@@ -19,7 +25,7 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     }, []);
 
     useEffect(() => {
-        if (showReminderCard) {
+        if (showReminderCard || showLoginPrompt) {
             // Small delay to ensure the element is rendered before animation
             const timer = setTimeout(() => {
                 setIsSliding(true);
@@ -28,11 +34,18 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
         } else {
             setIsSliding(false);
         }
-    }, [showReminderCard]);
+    }, [showReminderCard, showLoginPrompt]);
 
     const handleGoalSaved = (goal) => {
         setSavedGoal(goal);
-        setShowReminderCard(true);
+        
+        // If user is authenticated, show reminder card
+        // If not authenticated, show login prompt
+        if (currentUser) {
+            setShowReminderCard(true);
+        } else {
+            setShowLoginPrompt(true);
+        }
     };
 
     const handleReminderClose = () => {
@@ -43,10 +56,23 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     };
 
     const handleReminderSet = (reminders) => {
+        // TODO: Here you'll integrate with Google Todo API
+        console.log('Setting reminders:', reminders);
         updateLatestGoal();
         setShowReminderCard(false);
         setSavedGoal(null);
         goalsFormRef.current?.clearForm();
+    };
+
+    const handleLoginPromptClose = () => {
+        setShowLoginPrompt(false);
+        setSavedGoal(null);
+        goalsFormRef.current?.clearForm();
+    };
+
+    const handleLoginPromptSignIn = () => {
+        // Navigate to login page
+        navigate('/login');
     };
 
     // Helper to update the latest goal in history
@@ -78,7 +104,7 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     };
 
     return (
-        <div className={`goals-page-goals-card ${showReminderCard ? 'show-reminder' : ''}`}>
+        <div className={`goals-page-goals-card ${(showReminderCard || showLoginPrompt) ? 'show-reminder' : ''}`}>
             <div className={`goals-card-container ${goalsCardAnimated ? 'animated' : ''}`}>
                 <GoalsForm 
                     history={history}
@@ -92,11 +118,19 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
             </div>
             
             <div className={`reminder-card-container ${isSliding ? 'slide-in' : ''}`}>
-                {showReminderCard && (
+                {showReminderCard && currentUser && (
                     <ReminderCard
                         goal={savedGoal}
                         onClose={handleReminderClose}
                         onReminderSet={handleReminderSet}
+                    />
+                )}
+                
+                {showLoginPrompt && !currentUser && (
+                    <LoginPromptCard
+                        goal={savedGoal}
+                        onClose={handleLoginPromptClose}
+                        onLogin={handleLoginPromptSignIn}
                     />
                 )}
             </div>

@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login.jsx";
 import Signup from "./pages/Signup/Signup.jsx";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 // TODO: Add a button to clear the history
 // TODO: fix mobile views
@@ -16,9 +17,10 @@ import Signup from "./pages/Signup/Signup.jsx";
 // TODO: implement user accounts for saving goals
 // TODO: suggestions for goals, as user is typing, we will have suggestions for the length of the goal
 
-const App = () => {
+const AppContent = () => {
     const { history, setHistory, editingGoal, setEditingGoal, handleDelete, unviewedCount, markGoalsAsViewed } = useGoals();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { currentUser, loading } = useAuth();
 
     const handleSidebarToggle = () => {
         const newOpenState = !sidebarOpen;
@@ -34,11 +36,22 @@ const App = () => {
         setSidebarOpen(false);
     };
 
+    // Show loading screen while checking authentication
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route 
+                    path="/login" 
+                    element={currentUser ? <Navigate to="/" /> : <Login />} 
+                />
+                <Route 
+                    path="/signup" 
+                    element={currentUser ? <Navigate to="/" /> : <Signup />} 
+                />
                 <Route
                     path="/"
                     element={
@@ -47,6 +60,7 @@ const App = () => {
                                 sidebarOpen={sidebarOpen}
                                 onSidebarToggle={handleSidebarToggle}
                                 unviewedCount={unviewedCount}
+                                currentUser={currentUser}
                             />
                             <div className="app-layout">
                                 <Sidebar 
@@ -72,10 +86,18 @@ const App = () => {
                         </div>
                     }
                 />
-                {/* Optionally, redirect unknown routes */}
-                <Route path="*" element={<Navigate to="/login" />} />
+                {/* Redirect unknown routes to main page (no forced login) */}
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </Router>
+    );
+};
+
+const App = () => {
+    return (
+        <AuthProvider>
+            <AppContent />
+        </AuthProvider>
     );
 };
 
