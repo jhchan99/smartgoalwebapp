@@ -1,16 +1,19 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm
+FROM python:3.12-slim
 
 WORKDIR /app
 
-# Copy dependency files first for better caching
-COPY pyproject.toml uv.lock ./
-RUN uv sync --locked
+# Install system dependencies (if needed)
+RUN apt-get update && apt-get install -y gcc && rm -rf /var/lib/apt/lists/*
 
-# Copy the rest of your code
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
 COPY . .
 
-# Expose the port your app runs on
+# Expose port (for documentation)
 EXPOSE 8080
 
-# Start your FastAPI app - use Cloud Run's PORT environment variable
+# Start the application with Cloud Run's PORT variable
 CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"]
