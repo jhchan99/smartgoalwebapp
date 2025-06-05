@@ -15,15 +15,6 @@ RUN npm install
 # Copy the rest of your app's source code
 COPY . .
 
-# Add your Firebase env variables here
-ENV REACT_APP_FIREBASE_API_KEY=AIzaSyBAqLjn0GiJPpc-WMORilbD3U4WjvtpYSI
-ENV REACT_APP_FIREBASE_AUTH_DOMAIN=smartgoalapp-3a223.firebaseapp.com
-ENV REACT_APP_FIREBASE_PROJECT_ID=smartgoalapp-3a223
-ENV REACT_APP_FIREBASE_STORAGE_BUCKET=smartgoalapp-3a223.firebasestorage.app
-ENV REACT_APP_FIREBASE_MESSAGING_SENDER_ID=846883427065
-ENV REACT_APP_FIREBASE_APP_ID=1:846883427065:web:bf391e12db0a0814044828
-ENV REACT_APP_FIREBASE_MEASUREMENT_ID=G-D29YRV2CJZ
-
 # Build the React app for production
 RUN npm run build
 
