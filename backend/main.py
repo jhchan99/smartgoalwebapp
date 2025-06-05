@@ -3,6 +3,11 @@ from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 fake_users_db = {
     "johndoe": {
@@ -22,6 +27,8 @@ fake_users_db = {
 }
 
 app = FastAPI()
+
+origins = []
 
 
 def fake_hash_password(password: str):

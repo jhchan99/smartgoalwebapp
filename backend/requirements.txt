@@ -1,6 +1,8 @@
-fastapi
+fastapi[standard]
+fastapi[all]
 uvicorn[standard]
 gunicorn
 python-multipart
+python-dotenv
 # Add any other dependencies here
 

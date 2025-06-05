@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import GoalsPage from "./pages/GoalsPage/GoalsPage";
-import History from "./components/History/History";
-import Header from "./components/Header/Header";
-import { useGoals } from './hooks/useGoals';
+import GoalsPage from "./pages/GoalsPage/GoalsPage/GoalsPage.jsx";
+import History from "./components/History/History.jsx";
+import Header from "./components/Header/Header.jsx";
+import { useGoals } from './hooks/useGoals.jsx';
 import './styles/globals.css';
-import Sidebar from "./components/Sidebar/Sidebar";
+import Sidebar from "./components/Sidebar/Sidebar.jsx";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login/Login.jsx";
+import Signup from "./pages/Signup/Signup.jsx";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 // TODO: Add a button to clear the history
 // TODO: fix mobile views
@@ -13,9 +17,23 @@ import Sidebar from "./components/Sidebar/Sidebar";
 // TODO: implement user accounts for saving goals
 // TODO: suggestions for goals, as user is typing, we will have suggestions for the length of the goal
 
-const App = () => {
-    const { history, setHistory, editingGoal, setEditingGoal, handleDelete, unviewedCount, markGoalsAsViewed } = useGoals();
+const AppContent = () => {
+    const { 
+        history, 
+        setHistory, 
+        editingGoal, 
+        setEditingGoal, 
+        handleDelete, 
+        handleSaveGoal,
+        handleUpdateGoal,
+        unviewedCount, 
+        markGoalsAsViewed,
+        loading,
+        error
+    } = useGoals();
+    
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { currentUser, loading: authLoading } = useAuth();
 
     const handleSidebarToggle = () => {
         const newOpenState = !sidebarOpen;
@@ -31,35 +49,75 @@ const App = () => {
         setSidebarOpen(false);
     };
 
+    // Show loading screen while checking authentication
+    if (authLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        console.error('Goals error:', error);
+        // You might want to show a toast notification here instead
+    }
+
     return (
-        <div>
-            <Header 
-                sidebarOpen={sidebarOpen}
-                onSidebarToggle={handleSidebarToggle}
-                unviewedCount={unviewedCount}
-            />
-            <div className="app-layout">
-                <Sidebar 
-                    isOpen={sidebarOpen}
-                    onClose={handleSidebarClose}
-                    unviewedCount={unviewedCount}
-                >
-                    <History 
-                        history={history}
-                        onEdit={setEditingGoal} 
-                        onDelete={handleDelete}
-                    />
-                </Sidebar>
-                <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
-                    <GoalsPage 
-                        history={history} 
-                        setHistory={setHistory}
-                        editingGoal={editingGoal}
-                        setEditingGoal={setEditingGoal}
-                    />
-                </main>
-            </div>
-        </div>
+        <Router>
+            <Routes>
+                <Route 
+                    path="/login" 
+                    element={currentUser ? <Navigate to="/" /> : <Login />} 
+                />
+                <Route 
+                    path="/signup" 
+                    element={currentUser ? <Navigate to="/" /> : <Signup />} 
+                />
+                <Route
+                    path="/"
+                    element={
+                        <div>
+                            <Header 
+                                sidebarOpen={sidebarOpen}
+                                onSidebarToggle={handleSidebarToggle}
+                                unviewedCount={unviewedCount}
+                            />
+                            <div className="app-layout">
+                                <Sidebar 
+                                    isOpen={sidebarOpen}
+                                    onClose={handleSidebarClose}
+                                    unviewedCount={unviewedCount}
+                                >
+                                    <History 
+                                        history={history}
+                                        onEdit={setEditingGoal} 
+                                        onDelete={handleDelete}
+                                        loading={loading}
+                                    />
+                                </Sidebar>
+                                <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
+                                    <GoalsPage 
+                                        history={history} 
+                                        setHistory={setHistory}
+                                        editingGoal={editingGoal}
+                                        setEditingGoal={setEditingGoal}
+                                        handleSaveGoal={handleSaveGoal}
+                                        handleUpdateGoal={handleUpdateGoal}
+                                    />
+                                </main>
+                            </div>
+                        </div>
+                    }
+                />
+                {/* Redirect unknown routes to main page */}
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+        </Router>
+    );
+};
+
+const App = () => {
+    return (
+        <AuthProvider>
+            <AppContent />
+        </AuthProvider>
     );
 };
 
