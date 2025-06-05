@@ -18,9 +18,22 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 // TODO: suggestions for goals, as user is typing, we will have suggestions for the length of the goal
 
 const AppContent = () => {
-    const { history, setHistory, editingGoal, setEditingGoal, handleDelete, unviewedCount, markGoalsAsViewed } = useGoals();
+    const { 
+        history, 
+        setHistory, 
+        editingGoal, 
+        setEditingGoal, 
+        handleDelete, 
+        handleSaveGoal,
+        handleUpdateGoal,
+        unviewedCount, 
+        markGoalsAsViewed,
+        loading,
+        error
+    } = useGoals();
+    
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const { currentUser, loading } = useAuth();
+    const { currentUser, loading: authLoading } = useAuth();
 
     const handleSidebarToggle = () => {
         const newOpenState = !sidebarOpen;
@@ -37,8 +50,13 @@ const AppContent = () => {
     };
 
     // Show loading screen while checking authentication
-    if (loading) {
+    if (authLoading) {
         return <div>Loading...</div>;
+    }
+
+    if (error) {
+        console.error('Goals error:', error);
+        // You might want to show a toast notification here instead
     }
 
     return (
@@ -60,7 +78,6 @@ const AppContent = () => {
                                 sidebarOpen={sidebarOpen}
                                 onSidebarToggle={handleSidebarToggle}
                                 unviewedCount={unviewedCount}
-                                currentUser={currentUser}
                             />
                             <div className="app-layout">
                                 <Sidebar 
@@ -72,6 +89,7 @@ const AppContent = () => {
                                         history={history}
                                         onEdit={setEditingGoal} 
                                         onDelete={handleDelete}
+                                        loading={loading}
                                     />
                                 </Sidebar>
                                 <main className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
@@ -80,13 +98,15 @@ const AppContent = () => {
                                         setHistory={setHistory}
                                         editingGoal={editingGoal}
                                         setEditingGoal={setEditingGoal}
+                                        handleSaveGoal={handleSaveGoal}
+                                        handleUpdateGoal={handleUpdateGoal}
                                     />
                                 </main>
                             </div>
                         </div>
                     }
                 />
-                {/* Redirect unknown routes to main page (no forced login) */}
+                {/* Redirect unknown routes to main page */}
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </Router>

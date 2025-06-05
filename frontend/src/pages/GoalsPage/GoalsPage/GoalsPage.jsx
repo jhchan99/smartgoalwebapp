@@ -4,14 +4,16 @@ import GoalsForm from '../../../components/GoalsFormCard/GoalsForm';
 import ReminderCard from '../../../components/ReminderCard/ReminderCard';
 import LoginPromptCard from '../../../components/LoginPromptCard/LoginPromptCard';
 import { useAuth } from '../../../contexts/AuthContext';
+import { RemindersService } from '../../../services/remindersService';
 import './GoalsPage.css';
 
-const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
+const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal, handleSaveGoal, handleUpdateGoal }) => {
     const [showReminderCard, setShowReminderCard] = useState(false);
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
     const [savedGoal, setSavedGoal] = useState(null);
     const [isSliding, setIsSliding] = useState(false);
     const [goalsCardAnimated, setGoalsCardAnimated] = useState(false);
+    const [isSettingReminders, setIsSettingReminders] = useState(false);
     const { currentUser } = useAuth();
     const navigate = useNavigate();
     const goalsFormRef = useRef();
@@ -49,19 +51,35 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
     };
 
     const handleReminderClose = () => {
-        updateLatestGoal();
         setShowReminderCard(false);
         setSavedGoal(null);
         goalsFormRef.current?.clearForm();
     };
 
-    const handleReminderSet = (reminders) => {
-        // TODO: Here you'll integrate with Google Todo API
-        console.log('Setting reminders:', reminders);
-        updateLatestGoal();
-        setShowReminderCard(false);
-        setSavedGoal(null);
-        goalsFormRef.current?.clearForm();
+    const handleReminderSet = async (reminders) => {
+        if (!currentUser || !savedGoal) return;
+        
+        setIsSettingReminders(true);
+        
+        try {
+            await RemindersService.setReminders(
+                currentUser.uid, 
+                savedGoal.id, 
+                reminders
+            );
+            
+            // Show success message
+            console.log('Reminders set successfully!');
+            
+            setShowReminderCard(false);
+            setSavedGoal(null);
+            goalsFormRef.current?.clearForm();
+        } catch (error) {
+            console.error('Failed to set reminders:', error);
+            alert('Failed to set reminders. Please try again.');
+        } finally {
+            setIsSettingReminders(false);
+        }
     };
 
     const handleLoginPromptClose = () => {
@@ -75,34 +93,6 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
         navigate('/login');
     };
 
-    // Helper to update the latest goal in history
-    const updateLatestGoal = () => {
-        const latestGoal = goalsFormRef.current?.getCurrentGoalData();
-        if (!latestGoal) return;
-
-        // If editing, update the correct index; otherwise, update the most recent
-        if (editingGoal && editingGoal.index !== undefined) {
-            const updatedHistory = [...history];
-            updatedHistory[editingGoal.index] = {
-                ...latestGoal,
-                dateSaved: new Date().toLocaleString(),
-                isViewed: false,
-                dateViewed: null
-            };
-            setHistory(updatedHistory);
-        } else {
-            // Replace the most recent goal (index 0)
-            const updatedHistory = [...history];
-            updatedHistory[0] = {
-                ...latestGoal,
-                dateSaved: new Date().toLocaleString(),
-                isViewed: false,
-                dateViewed: null
-            };
-            setHistory(updatedHistory);
-        }
-    };
-
     return (
         <div className={`goals-page-goals-card ${(showReminderCard || showLoginPrompt) ? 'show-reminder' : ''}`}>
             <div className={`goals-card-container ${goalsCardAnimated ? 'animated' : ''}`}>
@@ -113,6 +103,8 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
                     setEditingGoal={setEditingGoal}
                     onGoalSaved={handleGoalSaved}
                     setShowReminderCard={setShowReminderCard}
+                    handleSaveGoal={handleSaveGoal}
+                    handleUpdateGoal={handleUpdateGoal}
                     ref={goalsFormRef}
                 />
             </div>
@@ -123,6 +115,7 @@ const GoalsPage = ({ history, setHistory, editingGoal, setEditingGoal }) => {
                         goal={savedGoal}
                         onClose={handleReminderClose}
                         onReminderSet={handleReminderSet}
+                        isLoading={isSettingReminders}
                     />
                 )}
                 

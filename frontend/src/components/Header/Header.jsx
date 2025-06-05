@@ -39,22 +39,22 @@ const Header = ({ sidebarOpen, onSidebarToggle, unviewedCount = 0 }) => {
       
       <div className="header-right">
         {/* Space for future header actions */}
+        <div className="header-auth">
+          {currentUser ? (
+            <div className="user-menu">
+              <span className="user-email">{currentUser.email}</span>
+              <button onClick={handleSignOut} className="sign-out-btn" aria-label="Sign Out">
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <button onClick={handleSignIn} className="sign-in-btn" aria-label="Sign In">
+              Sign In
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="header-auth">
-        {currentUser ? (
-          <div className="user-menu">
-            <span className="user-email">{currentUser.email}</span>
-            <button onClick={handleSignOut} className="sign-out-btn">
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <button onClick={handleSignIn} className="sign-in-btn">
-            Sign In
-          </button>
-        )}
-      </div>
     </header>
   );
 };

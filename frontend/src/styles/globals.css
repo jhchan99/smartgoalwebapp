@@ -277,6 +277,7 @@ body {
   background-color: var(--interactive-bg-secondary-hover);
 }
 
+
 /* Card styles */
 .card {
   background-color: var(--surface-primary);
@@ -373,4 +374,136 @@ body {
 
 * {
   border-color: hsl(var(--border));
+}
+
+/* ===== AUTH BUTTON STYLES ===== */
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.user-email {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sign-in-btn {
+  /* Use your existing button base */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast) var(--ease-in-out);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  
+  /* Primary button styling */
+  background: linear-gradient(135deg, var(--interactive-bg-primary-default) 0%, #1d4ed8 100%);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.sign-in-btn:hover {
+  background: linear-gradient(135deg, var(--interactive-bg-primary-hover) 0%, #1e40af 100%);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.sign-in-btn:active {
+  background: var(--interactive-bg-primary-active);
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.sign-in-btn:focus-visible {
+  outline: 2px solid var(--border-accent);
+  outline-offset: 2px;
+}
+
+.sign-out-btn {
+  /* Use your existing button base */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast) var(--ease-in-out);
+  cursor: pointer;
+  outline: none;
+  
+  /* Secondary button styling */
+  background: var(--surface-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.sign-out-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+  border-color: var(--border-heavy);
+}
+
+.sign-out-btn:active {
+  background: var(--surface-active);
+}
+
+.sign-out-btn:focus-visible {
+  outline: 2px solid var(--border-accent);
+  outline-offset: 2px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .user-menu {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    align-items: flex-end;
+  }
+  
+  .user-email {
+    font-size: var(--font-size-xs);
+    max-width: 120px;
+  }
+  
+  .sign-in-btn,
+  .sign-out-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Dark theme adjustments */
+.dark .sign-out-btn {
+  background: var(--surface-secondary);
+  border-color: var(--border-default);
+}
+
+.dark .sign-out-btn:hover {
+  background: var(--surface-tertiary);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sign-in-btn:hover,
+  .sign-out-btn:hover {
+    transform: none;
+  }
 }
