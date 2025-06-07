@@ -1,62 +1,48 @@
-name: Deploy to Cloud Run
+name: Deploy Frontend to Cloud Run
 
 on:
   push:
     branches:
-      - main        # Deploy to production
-      - staging     # Deploy to staging
-  pull_request:
-    branches:
-      - main        # Test builds on PRs
+      - staging     # We will focus on staging first
 
 env:
   PROJECT_ID: smartgoalapp-3a223
   REGION: us-west3
 
 jobs:
-  deploy:
+  deploy-frontend:
+    name: Deploy Frontend
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    
+
     - name: Authenticate to Google Cloud
       id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}'
-    
+
     - name: Set up Cloud SDK
       uses: 'google-github-actions/setup-gcloud@v2'
-    
-    - name: Configure Docker to use gcloud as credential helper
-      run: gcloud auth configure-docker
-    
-    - name: Deploy to staging
+
+    - name: 🐞 Debug and Verify Secrets
+      if: github.ref == 'refs/heads/staging'
+      run: |
+        echo "--- Verifying secrets are not empty ---"
+        echo "API Key is set: ${{ secrets.REACT_APP_FIREBASE_API_KEY != '' }}"
+        echo "Auth Domain is set: ${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN != '' }}"
+        echo "Project ID is set: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID != '' }}"
+        echo "------------------------------------"
+
+    - name: 🚀 Deploy to Staging
       if: github.ref == 'refs/heads/staging'
       run: |
         gcloud builds submit ./frontend \
           --config=./frontend/cloudbuild.yaml \
-          --substitutions=_REACT_APP_FIREBASE_API_KEY="${{ secrets.REACT_APP_FIREBASE_API_KEY }}",_REACT_APP_FIREBASE_AUTH_DOMAIN="${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}",_REACT_APP_FIREBASE_PROJECT_ID="${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}",_REACT_APP_FIREBASE_STORAGE_BUCKET="${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}",_REACT_APP_FIREBASE_MESSAGING_SENDER_ID="${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}",_REACT_APP_FIREBASE_APP_ID="${{ secrets.REACT_APP_FIREBASE_APP_ID }}",_REACT_APP_FIREBASE_MEASUREMENT_ID="${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}"
-    
-    - name: Deploy to production
-      if: github.ref == 'refs/heads/main'
-      run: |
-        gcloud builds submit ./frontend \
-          --config=./frontend/cloudbuild.yaml \
-          --substitutions=_REACT_APP_FIREBASE_API_KEY="${{ secrets.REACT_APP_FIREBASE_API_KEY }}",_REACT_APP_FIREBASE_AUTH_DOMAIN="${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}",_REACT_APP_FIREBASE_PROJECT_ID="${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}",_REACT_APP_FIREBASE_STORAGE_BUCKET="${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}",_REACT_APP_FIREBASE_MESSAGING_SENDER_ID="${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}",_REACT_APP_FIREBASE_APP_ID="${{ secrets.REACT_APP_FIREBASE_APP_ID }}",_REACT_APP_FIREBASE_MEASUREMENT_ID="${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}"
-    
-    - name: Deploy backend
-      run: |
-        gcloud run deploy smart-goal-app-backend \
-          --source ./backend \
-          --region ${{ env.REGION }} \
-          --allow-unauthenticated \
-          --project ${{ env.PROJECT_ID }}
-    
-    - name: Test build only (for PRs)
-      if: github.event_name == 'pull_request'
-      run: |
-        echo "Testing build for PR..."
-        docker build -t test-build ./frontend
+          --substitutions=_REACT_APP_FIREBASE_API_KEY='${{ secrets.REACT_APP_FIREBASE_API_KEY }}',_REACT_APP_FIREBASE_AUTH_DOMAIN='${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}',_REACT_APP_FIREBASE_PROJECT_ID='${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}',_REACT_APP_FIREBASE_STORAGE_BUCKET='${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}',_REACT_APP_FIREBASE_MESSAGING_SENDER_ID='${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}',_REACT_APP_FIREBASE_APP_ID='${{ secrets.REACT_APP_FIREBASE_APP_ID }}', _REACT_APP_FIREBASE_MEASUREMENT_ID='${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}'
